@@ -1,0 +1,59 @@
+<app-header></app-header>
+<div class="container-fluid bg-primary rounded" >
+ <div class="container bg">
+  <div class="row bg-warning ">
+    <button class="btn btn-success"  (click)="isType = !isType">Choose type</button>
+   </div>
+     <div *ngIf="isType" class="btn-group ">
+    <div class="row bg-warning">
+     <div *ngFor="let item of types,let i=index">
+         <button class="btn rounded" [style.background-color]="btnColors[i]" (click)="typeFilter(item)">{{item}}</button>
+     </div>
+     </div>
+ </div>
+ 
+  <div class="row" >       
+     <div class="col-7">
+       <div class="row"  >
+       <div class="col-4" *ngFor="let item of filteredTypes,let id = index">
+        <div class="card bg-warning"  style="margin-top: 1cm;" >
+          <img class="card-img-top" src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{item.id}}.png' alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <div class="btn" [style.background-color]="btnColors[id]" *ngFor='let element of item.type'> {{element}}</div>
+            <div class="row">
+            </div>
+            </div>
+          <div class="card-footer">
+              <button class="btn btn-success" (click)="moreInfo(item)">More info...</button>
+          </div>
+        </div>
+        </div>
+        </div>
+     </div>
+     <div class="col-5">
+        <div class="card bg-success" style="margin-top:1cm;" *ngIf='selectedPokemon'>
+            <img src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{selectedPokemon.id}}.png'class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{selectedPokemon.name}}</h5>
+              <table class="table">
+                <tr>
+                  <td>Types</td>
+                  <td> <h6 *ngFor="let item of selectedPokemon.types"> {{item.type.name}}</h6></td>
+                </tr>
+                <tr *ngFor ="let item of selectedPokemon.stats">
+                  <td>{{item.stat.name}}</td>
+                  <td>{{item.base_stat}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+     </div>
+ </div>
+ <div class="row">
+   <div class="col-7">  
+    <button class="btn btn-warning" (click)='loadMore(pokemons.next)'>Load More</button>
+   </div>
+  </div>
+</div>
+</div>
